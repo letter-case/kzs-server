@@ -6,14 +6,16 @@ const cors = require("cors");
 const logger = require("morgan");
 
 const kzs = require("./routes/kzs");
-const { Kzs, sequelize } = require("./database/models");
-const { Op } = require("sequelize");
+
+// const { Kzs, sequelize } = require("./database/models");
+// const { Op } = require("sequelize");
+
 
 const corrsOptions = {
     methods: ["GET", "POST", "PUT", "DELETE"],
     origin:
         process.env.NODE_ENV === "production"
-            ? "https://loftstylelife.ru"
+            ? "http://localhost:3000"
             : "http://localhost:3000",
     credentials: true,
     preflightContinue: false,
@@ -49,7 +51,9 @@ app.use(function (err, req, res, next) {
     res.json({ error: "Some server error, plese, write to horse" });
 });
 
+
 const job = new CronJob("0 */1 * * * *", async function () {
+    //TODO: db backup
     console.log("Fireee");
 });
 job.start();
