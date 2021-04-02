@@ -1,6 +1,6 @@
 const http = require("request");
 
-const token = "1645866421:AAEOjsGGw2CT8bLhv1ye1H8KwPuKrqOilvA";
+const token = process.env.TELEGRAM_TOKEN;
 const chat = "-520456096";
 
 const telegram = (msg) => {
