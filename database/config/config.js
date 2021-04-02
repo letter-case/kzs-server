@@ -9,10 +9,10 @@ require("dotenv").config();
 
 module.exports = {
     development: {
-        username: process.env.CI_DB_USERNAME,
-        password: process.env.CI_DB_PASSWORD,
-        database: process.env.CI_DB_NAME,
-        host: process.env.CI_DB_HOST,
+        username: CI_DB_USERNAME,
+        password: CI_DB_PASSWORD,
+        database: CI_DB_NAME,
+        host: CI_DB_HOST,
         dialect: "postgres",
         dialectOptions: {
             ssl: { rejectUnauthorized: false },

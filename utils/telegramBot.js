@@ -1,11 +1,12 @@
 const http = require("request");
 
-const token = process.env.TELEGRAM_TOKEN;
+const { TELEGRAM_TOKEN } = require("../configs/envs");
+
 const chat = "-520456096";
 
 const telegram = (msg) => {
     const message = encodeURI(msg);
-    const url = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat}&parse_mode=html&text=${message}`;
+    const url = `https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage?chat_id=${chat}&parse_mode=html&text=${message}`;
 
     http.post(url, (error, response, body) => {
         console.error("error:", error);
