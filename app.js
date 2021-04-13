@@ -16,7 +16,7 @@ const corrsOptions = {
     methods: ["GET", "POST", "PUT", "DELETE"],
     origin:
         process.env.NODE_ENV === "production"
-            ? "http://localhost:3000"
+            ? "https://xn--80aaaiojamk8cnkaej1f8d.xn--p1ai"
             : "http://localhost:3000",
     credentials: true,
     preflightContinue: false,
