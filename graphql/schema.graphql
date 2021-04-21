@@ -1,0 +1,24 @@
+type Heading {
+    type: String!
+    title: String!
+    subtitle: String
+    description: String
+}
+type PictureItem {
+    alt: String
+    src: String
+    title: String
+    breakpoint: String
+}
+
+type Product {
+    id: ID
+    heading: Heading!
+    articul: String
+    slug: String
+    picture: [PictureItem]
+}
+
+type Query {
+    productssearch(search: String!): [Product]
+}
