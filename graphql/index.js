@@ -3,17 +3,6 @@ const { products } = require("../database/models");
 const { Op } = require("sequelize");
 
 const schema = buildSchema(`
-    type PictureItem {
-        alt: String
-        src: String
-        title: String
-        breakpoint: String
-    }
-
-    type Picture {
-        picture: [PictureItem]
-    }
-
     type Product {
         id: ID,
         name: String
@@ -31,9 +20,18 @@ const root = {
     productssearch: async ({ search }) => {
         const { rows } = await products.findAndCountAll({
             where: {
-                articul: {
-                    [Op.like]: `%${search}%`,
-                },
+                [Op.or]: [
+                    { 
+                        articul: {
+                            [Op.like]: `%${search}%`,
+                        }
+                    },
+                    {
+                        "heading.title": {
+                            [Op.like]: `%${search}%`
+                        }
+                    }
+                ]
             },
         });
 
@@ -42,7 +40,7 @@ const root = {
             name: heading.title,
             articul,
             slug,
-            picture,
+            picture: JSON.stringify(picture),
         }));
 
         return data;
