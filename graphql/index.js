@@ -18,32 +18,38 @@ const schema = buildSchema(`
 
 const root = {
     productssearch: async ({ search }) => {
-        const { rows } = await products.findAndCountAll({
-            where: {
-                [Op.or]: [
-                    { 
-                        articul: {
-                            [Op.like]: `%${search}%`,
-                        }
-                    },
-                    {
-                        "heading.title": {
-                            [Op.like]: `%${search}%`
-                        }
-                    }
-                ]
-            },
-        });
+        const serachValue = search.trim();
 
-        const data = rows.map(({ id, heading, articul, slug, picture }) => ({
-            id,
-            name: heading.title,
-            articul,
-            slug,
-            picture: JSON.stringify(picture),
-        }));
+        if(serachValue) {
+            const { rows } = await products.findAndCountAll({
+                where: {
+                    [Op.or]: [
+                        { 
+                            articul: {
+                                [Op.like]: `%${serachValue}%`,
+                            }
+                        },
+                        {
+                            "heading.title": {
+                                [Op.like]: `%${serachValue}%`
+                            }
+                        }
+                    ]
+                },
+            });
 
-        return data;
+            const data = rows.map(({ id, heading, articul, slug, picture }) => ({
+                id,
+                name: heading.title,
+                articul,
+                slug,
+                picture: JSON.stringify(picture),
+            }));
+
+            return data;
+        } else {
+            return [];
+        }
     },
 };
 
