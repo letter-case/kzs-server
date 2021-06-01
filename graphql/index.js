@@ -1,5 +1,5 @@
 const { buildSchema } = require("graphql");
-const { products } = require("../database/models");
+const { products, categories } = require("../database/models");
 const { Op } = require("sequelize");
 
 const schema = buildSchema(`
@@ -9,6 +9,7 @@ const schema = buildSchema(`
         articul: String
         slug: String
         picture: String
+        category: String
     }
 
     type Query {
@@ -36,14 +37,19 @@ const root = {
                         }
                     ]
                 },
+                include: [{
+                    model: categories,
+                    as: "category",
+                }],
             });
 
-            const data = rows.map(({ id, heading, articul, slug, picture }) => ({
+            const data = rows.map(({ id, heading, articul, slug, picture, category }) => ({
                 id,
                 name: heading.title,
                 articul,
                 slug,
                 picture: JSON.stringify(picture),
+                category: JSON.stringify(category)
             }));
 
             return data;
